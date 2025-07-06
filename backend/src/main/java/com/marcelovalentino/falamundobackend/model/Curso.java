@@ -48,14 +48,23 @@ public class Curso {
     @ManyToOne
     private Lingua lingua;
 
+    @ManyToOne
+    @NotNull(message = "O 'Nível' deve ser informado.")
+    private Nivel nivel;
+
+    @Min(value = 0, message = "O número de vagas deve ser maior ou igual a zero.")
+    private int vagas;
+
     public Curso(String imagem, String nome, String slug, String descricao,
-                 boolean disponivel, int qtdEstoque, BigDecimal preco,
+                 boolean disponivel, int vagas, Nivel nivel, BigDecimal preco,
                  LocalDate dataCadastro, Lingua lingua) {
         this.imagem = imagem;
         this.nome = nome;
         this.slug = slug;
         this.descricao = descricao;
         this.disponivel = disponivel;
+        this.vagas = vagas;
+        this.nivel = nivel;
         this.preco = preco;
         this.dataCadastro = dataCadastro;
         this.lingua = lingua;

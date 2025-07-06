@@ -4,10 +4,12 @@ import com.marcelovalentino.falamundobackend.model.Carrinho;
 import com.marcelovalentino.falamundobackend.model.Lingua;
 import com.marcelovalentino.falamundobackend.model.Curso;
 import com.marcelovalentino.falamundobackend.model.Usuario;
+import com.marcelovalentino.falamundobackend.model.Nivel;
 import com.marcelovalentino.falamundobackend.repository.CarrinhoRepository;
 import com.marcelovalentino.falamundobackend.repository.CursoRepository;
 import com.marcelovalentino.falamundobackend.repository.LinguaRepository;
 import com.marcelovalentino.falamundobackend.repository.UsuarioRepository;
+import com.marcelovalentino.falamundobackend.repository.NivelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,10 +28,13 @@ public class Apirestfulv1Application implements CommandLineRunner {
 	private CursoRepository cursoRepository;
 
 	@Autowired
-	private LinguaRepository categoriaRepository;
+	private LinguaRepository linguaRepository;
 
 	@Autowired
 	private CarrinhoRepository carrinhoRepository;
+
+	@Autowired
+	private NivelRepository nivelRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Apirestfulv1Application.class, args);
@@ -44,901 +49,146 @@ public class Apirestfulv1Application implements CommandLineRunner {
 		Usuario usuario2 = new Usuario("usuario", "desweb");
 		usuarioRepository.save(usuario2);
 
-		Lingua fruta = new Lingua("Fruta", "frutas");
-		categoriaRepository.save(fruta);
+		Lingua frances = new Lingua("Francês", "frances");
+		linguaRepository.save(frances);
 
-		Lingua legume = new Lingua("Legume", "legumes");
-		categoriaRepository.save(legume);
+		Lingua ingles = new Lingua("Inglês", "ingles");
+		linguaRepository.save(ingles);
 
-		Lingua verdura = new Lingua("Verdura", "verduras");
-		categoriaRepository.save(verdura);
+		Lingua espanhol = new Lingua("Espanhol", "espanhol");
+		linguaRepository.save(espanhol);
 
+		Lingua alemao = new Lingua("Alemão", "alemao");
+		linguaRepository.save(alemao);
 
+		Lingua italiano = new Lingua("Italiano", "italiano");
+		linguaRepository.save(italiano);
 
-		Curso curso = new Curso(
-				"abacate.png",
-				"Abacate",
-				"abacate",
-				"1 unidade aprox. 750g",
+		Nivel basico = new Nivel("Básico");
+		nivelRepository.save(basico);
+		Nivel intermediario = new Nivel("Intermediário");
+		nivelRepository.save(intermediario);
+		Nivel avancado = new Nivel("Avançado");
+		nivelRepository.save(avancado);
+
+		Curso francesBasico = new Curso(
+				"FR",
+				"Francês Básico",
+				"frances-basico",
+				"Curso introdutório de Francês para iniciantes.",
 				true,
-				100,
-				BigDecimal.valueOf(2.45),
+				30,
+				basico,
+				BigDecimal.valueOf(499.90),
 				LocalDate.of(2023, 4, 26),
-				fruta);
-		cursoRepository.save(curso);
+				frances);
+		cursoRepository.save(francesBasico);
+
+		Curso francesConversacao = new Curso(
+				"FR",
+				"Francês Conversação",
+				"frances-conversacao",
+				"Curso focado em conversação para nível intermediário.",
+				true,
+				20,
+				intermediario,
+				BigDecimal.valueOf(599.90),
+				LocalDate.of(2023, 6, 10),
+				frances);
+		cursoRepository.save(francesConversacao);
+
+		Curso inglesIntermediario = new Curso(
+				"EN",
+				"Inglês Intermediário",
+				"ingles-intermediario",
+				"Aprofunde seus conhecimentos em Inglês.",
+				true,
+				25,
+				intermediario,
+				BigDecimal.valueOf(599.90),
+				LocalDate.of(2023, 5, 22),
+				ingles);
+		cursoRepository.save(inglesIntermediario);
+
+		Curso inglesAvancado = new Curso(
+				"EN",
+				"Inglês Avançado",
+				"ingles-avancado",
+				"Curso avançado para fluência em Inglês.",
+				true,
+				15,
+				avancado,
+				BigDecimal.valueOf(699.90),
+				LocalDate.of(2023, 7, 1),
+				ingles);
+		cursoRepository.save(inglesAvancado);
+
+		Curso espanholAvancado = new Curso(
+				"ES",
+				"Espanhol Avançado",
+				"espanhol-avancado",
+				"Curso avançado para fluência em Espanhol.",
+				false,
+				10,
+				avancado,
+				BigDecimal.valueOf(699.90),
+				LocalDate.of(2023, 3, 24),
+				espanhol);
+		cursoRepository.save(espanholAvancado);
+
+		Curso espanholBasico = new Curso(
+				"ES",
+				"Espanhol Básico",
+				"espanhol-basico",
+				"Curso básico de Espanhol para iniciantes.",
+				true,
+				35,
+				basico,
+				BigDecimal.valueOf(399.90),
+				LocalDate.of(2023, 2, 10),
+				espanhol);
+		cursoRepository.save(espanholBasico);
+
+		Curso alemaoBasico = new Curso(
+				"DE",
+				"Alemão Básico",
+				"alemao-basico",
+				"Curso introdutório de Alemão para iniciantes.",
+				true,
+				18,
+				basico,
+				BigDecimal.valueOf(549.90),
+				LocalDate.of(2023, 8, 5),
+				alemao);
+		cursoRepository.save(alemaoBasico);
+
+		Curso italianoConversacao = new Curso(
+				"IT",
+				"Italiano Conversação",
+				"italiano-conversacao",
+				"Curso de conversação em Italiano para nível intermediário.",
+				true,
+				12,
+				intermediario,
+				BigDecimal.valueOf(579.90),
+				LocalDate.of(2023, 9, 12),
+				italiano);
+		cursoRepository.save(italianoConversacao);
 
 		Carrinho carrinho = new Carrinho(
-				curso,
-				usuario
-		);
-		curso = new Curso(
-				"abobrinha.png",
-				"Abobrinha",
-				"abobrinha",
-				"1 unidade aprox. 250g",
-				false,
-				500,
-				BigDecimal.valueOf(1.1),
-				LocalDate.of(2023, 5, 22),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobora.png",
-				"Abóbora",
-				"abobora",
-				"1 unidade aprox. 1,9kg",
-				true,
-				400,
-				BigDecimal.valueOf(4.7),
-				LocalDate.of(2023, 3, 24),
-				legume);
-		cursoRepository.save(curso);
-
-		carrinhoRepository.save(new Carrinho(
-				curso,
-				usuario
-		));
-		curso = new Curso(
-				"acelga.png",
-				"Acelga",
-				"acelga",
-				"1 maço de aprox. 400g",
-				true,
-				120,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 3, 12),
-				verdura);
-		cursoRepository.save(curso);
-		carrinho = new Carrinho(
-				curso,
+				francesBasico,
 				usuario
 		);
 		carrinhoRepository.save(carrinho);
-		curso = new Curso(
-				"agriao.png",
-				"Agrião",
-				"agriao",
-				"1 maço de aprox. 200g",
-				true,
-				340,
-				BigDecimal.valueOf(2.5),
-				LocalDate.of(2023, 5, 17),
-				verdura);
-		cursoRepository.save(curso);
 		carrinho = new Carrinho(
-				curso,
-				usuario,
-				true
+				inglesIntermediario,
+				usuario
 		);
 		carrinhoRepository.save(carrinho);
-		curso = new Curso(
-				"alface.png",
-				"Alface",
-				"alface",
-				"1 maço de aprox. 200g",
-				true,
-				220,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 5, 14),
-				verdura);
-		cursoRepository.save(curso);
 		carrinho = new Carrinho(
-				curso,
+				espanholAvancado,
 				usuario2
 		);
 		carrinhoRepository.save(carrinho);
-		curso = new Curso(
-				"banana.png",
-				"Banana",
-				"banana",
-				"1 unidade aprox. 165g",
-				true,
-				350,
-				BigDecimal.valueOf(1.05),
-				LocalDate.of(2023, 2, 22),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"beringela.png",
-				"Beringela",
-				"beringela",
-				"1 unidade aprox. 370g",
-				true,
-				720,
-				BigDecimal.valueOf(1.85),
-				LocalDate.of(2023, 2, 23),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"brocolis.png",
-				"Brócolis",
-				"brocolis",
-				"1 unidade aprox. 300g",
-				true,
-				600,
-				BigDecimal.valueOf(5.39),
-				LocalDate.of(2023, 3, 28),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cebola.png",
-				"Cebola",
-				"cebola",
-				"1 unidade aprox. 200g",
-				true,
-				95,
-				BigDecimal.valueOf(0.56),
-				LocalDate.of(2023, 4, 30),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cenoura.png",
-				"Cenoura",
-				"cenoura",
-				"1 unidade aprox. 180g",
-				true,
-				350,
-				BigDecimal.valueOf(1.01),
-				LocalDate.of(2023, 5, 29),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cereja.png",
-				"Cereja",
-				"cereja",
-				"1 unidade aprox. 250g",
-				true,
-				240,
-				BigDecimal.valueOf(11.23),
-				LocalDate.of(2023, 5, 11),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abacate.png",
-				"Abacate",
-				"abacate",
-				"1 unidade aprox. 750g",
-				true,
-				100,
-				BigDecimal.valueOf(2.45),
-				LocalDate.of(2023, 4, 26),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobrinha.png",
-				"Abobrinha",
-				"abobrinha",
-				"1 unidade aprox. 250g",
-				false,
-				500,
-				BigDecimal.valueOf(1.1),
-				LocalDate.of(2023, 5, 22),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobora.png",
-				"Abóbora",
-				"abobora",
-				"1 unidade aprox. 1,9kg",
-				true,
-				400,
-				BigDecimal.valueOf(4.7),
-				LocalDate.of(2023, 3, 24),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"acelga.png",
-				"Acelga",
-				"acelga",
-				"1 maço de aprox. 400g",
-				true,
-				120,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 3, 12),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"agriao.png",
-				"Agrião",
-				"agriao",
-				"1 maço de aprox. 200g",
-				true,
-				340,
-				BigDecimal.valueOf(2.5),
-				LocalDate.of(2023, 5, 17),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"alface.png",
-				"Alface",
-				"alface",
-				"1 maço de aprox. 200g",
-				true,
-				220,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 5, 14),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"banana.png",
-				"Banana",
-				"banana",
-				"1 unidade aprox. 165g",
-				true,
-				350,
-				BigDecimal.valueOf(1.05),
-				LocalDate.of(2023, 2, 22),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"beringela.png",
-				"Beringela",
-				"beringela",
-				"1 unidade aprox. 370g",
-				true,
-				720,
-				BigDecimal.valueOf(1.85),
-				LocalDate.of(2023, 2, 23),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"brocolis.png",
-				"Brócolis",
-				"brocolis",
-				"1 unidade aprox. 300g",
-				true,
-				600,
-				BigDecimal.valueOf(5.39),
-				LocalDate.of(2023, 3, 28),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cebola.png",
-				"Cebola",
-				"cebola",
-				"1 unidade aprox. 200g",
-				true,
-				95,
-				BigDecimal.valueOf(0.56),
-				LocalDate.of(2023, 4, 30),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cenoura.png",
-				"Cenoura",
-				"cenoura",
-				"1 unidade aprox. 180g",
-				true,
-				350,
-				BigDecimal.valueOf(1.01),
-				LocalDate.of(2023, 5, 29),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cereja.png",
-				"Cereja",
-				"cereja",
-				"1 unidade aprox. 250g",
-				true,
-				240,
-				BigDecimal.valueOf(11.23),
-				LocalDate.of(2023, 5, 11),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abacate.png",
-				"Abacate",
-				"abacate",
-				"1 unidade aprox. 750g",
-				true,
-				100,
-				BigDecimal.valueOf(2.45),
-				LocalDate.of(2023, 4, 26),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobrinha.png",
-				"Abobrinha",
-				"abobrinha",
-				"1 unidade aprox. 250g",
-				false,
-				500,
-				BigDecimal.valueOf(1.1),
-				LocalDate.of(2023, 5, 22),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobora.png",
-				"Abóbora",
-				"abobora",
-				"1 unidade aprox. 1,9kg",
-				true,
-				400,
-				BigDecimal.valueOf(4.7),
-				LocalDate.of(2023, 3, 24),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"acelga.png",
-				"Acelga",
-				"acelga",
-				"1 maço de aprox. 400g",
-				true,
-				120,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 3, 12),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"agriao.png",
-				"Agrião",
-				"agriao",
-				"1 maço de aprox. 200g",
-				true,
-				340,
-				BigDecimal.valueOf(2.5),
-				LocalDate.of(2023, 5, 17),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"alface.png",
-				"Alface",
-				"alface",
-				"1 maço de aprox. 200g",
-				true,
-				220,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 5, 14),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"banana.png",
-				"Banana",
-				"banana",
-				"1 unidade aprox. 165g",
-				true,
-				350,
-				BigDecimal.valueOf(1.05),
-				LocalDate.of(2023, 2, 22),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"beringela.png",
-				"Beringela",
-				"beringela",
-				"1 unidade aprox. 370g",
-				true,
-				720,
-				BigDecimal.valueOf(1.85),
-				LocalDate.of(2023, 2, 23),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"brocolis.png",
-				"Brócolis",
-				"brocolis",
-				"1 unidade aprox. 300g",
-				true,
-				600,
-				BigDecimal.valueOf(5.39),
-				LocalDate.of(2023, 3, 28),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cebola.png",
-				"Cebola",
-				"cebola",
-				"1 unidade aprox. 200g",
-				true,
-				95,
-				BigDecimal.valueOf(0.56),
-				LocalDate.of(2023, 4, 30),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cenoura.png",
-				"Cenoura",
-				"cenoura",
-				"1 unidade aprox. 180g",
-				true,
-				350,
-				BigDecimal.valueOf(1.01),
-				LocalDate.of(2023, 5, 29),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cereja.png",
-				"Cereja",
-				"cereja",
-				"1 unidade aprox. 250g",
-				true,
-				240,
-				BigDecimal.valueOf(11.23),
-				LocalDate.of(2023, 5, 11),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abacate.png",
-				"Abacate",
-				"abacate",
-				"1 unidade aprox. 750g",
-				true,
-				100,
-				BigDecimal.valueOf(2.45),
-				LocalDate.of(2023, 4, 26),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobrinha.png",
-				"Abobrinha",
-				"abobrinha",
-				"1 unidade aprox. 250g",
-				false,
-				500,
-				BigDecimal.valueOf(1.1),
-				LocalDate.of(2023, 5, 22),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobora.png",
-				"Abóbora",
-				"abobora",
-				"1 unidade aprox. 1,9kg",
-				true,
-				400,
-				BigDecimal.valueOf(4.7),
-				LocalDate.of(2023, 3, 24),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"acelga.png",
-				"Acelga",
-				"acelga",
-				"1 maço de aprox. 400g",
-				true,
-				120,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 3, 12),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"agriao.png",
-				"Agrião",
-				"agriao",
-				"1 maço de aprox. 200g",
-				true,
-				340,
-				BigDecimal.valueOf(2.5),
-				LocalDate.of(2023, 5, 17),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"alface.png",
-				"Alface",
-				"alface",
-				"1 maço de aprox. 200g",
-				true,
-				220,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 5, 14),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"banana.png",
-				"Banana",
-				"banana",
-				"1 unidade aprox. 165g",
-				true,
-				350,
-				BigDecimal.valueOf(1.05),
-				LocalDate.of(2023, 2, 22),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"beringela.png",
-				"Beringela",
-				"beringela",
-				"1 unidade aprox. 370g",
-				true,
-				720,
-				BigDecimal.valueOf(1.85),
-				LocalDate.of(2023, 2, 23),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"brocolis.png",
-				"Brócolis",
-				"brocolis",
-				"1 unidade aprox. 300g",
-				true,
-				600,
-				BigDecimal.valueOf(5.39),
-				LocalDate.of(2023, 3, 28),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cebola.png",
-				"Cebola",
-				"cebola",
-				"1 unidade aprox. 200g",
-				true,
-				95,
-				BigDecimal.valueOf(0.56),
-				LocalDate.of(2023, 4, 30),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cenoura.png",
-				"Cenoura",
-				"cenoura",
-				"1 unidade aprox. 180g",
-				true,
-				350,
-				BigDecimal.valueOf(1.01),
-				LocalDate.of(2023, 5, 29),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cereja.png",
-				"Cereja",
-				"cereja",
-				"1 unidade aprox. 250g",
-				true,
-				240,
-				BigDecimal.valueOf(11.23),
-				LocalDate.of(2023, 5, 11),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abacate.png",
-				"Abacate",
-				"abacate",
-				"1 unidade aprox. 750g",
-				true,
-				100,
-				BigDecimal.valueOf(2.45),
-				LocalDate.of(2023, 4, 26),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobrinha.png",
-				"Abobrinha",
-				"abobrinha",
-				"1 unidade aprox. 250g",
-				false,
-				500,
-				BigDecimal.valueOf(1.1),
-				LocalDate.of(2023, 5, 22),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobora.png",
-				"Abóbora",
-				"abobora",
-				"1 unidade aprox. 1,9kg",
-				true,
-				400,
-				BigDecimal.valueOf(4.7),
-				LocalDate.of(2023, 3, 24),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"acelga.png",
-				"Acelga",
-				"acelga",
-				"1 maço de aprox. 400g",
-				true,
-				120,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 3, 12),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"agriao.png",
-				"Agrião",
-				"agriao",
-				"1 maço de aprox. 200g",
-				true,
-				340,
-				BigDecimal.valueOf(2.5),
-				LocalDate.of(2023, 5, 17),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"alface.png",
-				"Alface",
-				"alface",
-				"1 maço de aprox. 200g",
-				true,
-				220,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 5, 14),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"banana.png",
-				"Banana",
-				"banana",
-				"1 unidade aprox. 165g",
-				true,
-				350,
-				BigDecimal.valueOf(1.05),
-				LocalDate.of(2023, 2, 22),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"beringela.png",
-				"Beringela",
-				"beringela",
-				"1 unidade aprox. 370g",
-				true,
-				720,
-				BigDecimal.valueOf(1.85),
-				LocalDate.of(2023, 2, 23),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"brocolis.png",
-				"Brócolis",
-				"brocolis",
-				"1 unidade aprox. 300g",
-				true,
-				600,
-				BigDecimal.valueOf(5.39),
-				LocalDate.of(2023, 3, 28),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cebola.png",
-				"Cebola",
-				"cebola",
-				"1 unidade aprox. 200g",
-				true,
-				95,
-				BigDecimal.valueOf(0.56),
-				LocalDate.of(2023, 4, 30),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cenoura.png",
-				"Cenoura",
-				"cenoura",
-				"1 unidade aprox. 180g",
-				true,
-				350,
-				BigDecimal.valueOf(1.01),
-				LocalDate.of(2023, 5, 29),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cereja.png",
-				"Cereja",
-				"cereja",
-				"1 unidade aprox. 250g",
-				true,
-				240,
-				BigDecimal.valueOf(11.23),
-				LocalDate.of(2023, 5, 11),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abacate.png",
-				"Abacate",
-				"abacate",
-				"1 unidade aprox. 750g",
-				true,
-				100,
-				BigDecimal.valueOf(2.45),
-				LocalDate.of(2023, 4, 26),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobrinha.png",
-				"Abobrinha",
-				"abobrinha",
-				"1 unidade aprox. 250g",
-				false,
-				500,
-				BigDecimal.valueOf(1.1),
-				LocalDate.of(2023, 5, 22),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"abobora.png",
-				"Abóbora",
-				"abobora",
-				"1 unidade aprox. 1,9kg",
-				true,
-				400,
-				BigDecimal.valueOf(4.7),
-				LocalDate.of(2023, 3, 24),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"acelga.png",
-				"Acelga",
-				"acelga",
-				"1 maço de aprox. 400g",
-				true,
-				120,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 3, 12),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"agriao.png",
-				"Agrião",
-				"agriao",
-				"1 maço de aprox. 200g",
-				true,
-				340,
-				BigDecimal.valueOf(2.5),
-				LocalDate.of(2023, 5, 17),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"alface.png",
-				"Alface",
-				"alface",
-				"1 maço de aprox. 200g",
-				true,
-				220,
-				BigDecimal.valueOf(4.99),
-				LocalDate.of(2023, 5, 14),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"banana.png",
-				"Banana",
-				"banana",
-				"1 unidade aprox. 165g",
-				true,
-				350,
-				BigDecimal.valueOf(1.05),
-				LocalDate.of(2023, 2, 22),
-				fruta);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"beringela.png",
-				"Beringela",
-				"beringela",
-				"1 unidade aprox. 370g",
-				true,
-				720,
-				BigDecimal.valueOf(1.85),
-				LocalDate.of(2023, 2, 23),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"brocolis.png",
-				"Brócolis",
-				"brocolis",
-				"1 unidade aprox. 300g",
-				true,
-				600,
-				BigDecimal.valueOf(5.39),
-				LocalDate.of(2023, 3, 28),
-				verdura);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cebola.png",
-				"Cebola",
-				"cebola",
-				"1 unidade aprox. 200g",
-				true,
-				95,
-				BigDecimal.valueOf(0.56),
-				LocalDate.of(2023, 4, 30),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cenoura.png",
-				"Cenoura",
-				"cenoura",
-				"1 unidade aprox. 180g",
-				true,
-				350,
-				BigDecimal.valueOf(1.01),
-				LocalDate.of(2023, 5, 29),
-				legume);
-		cursoRepository.save(curso);
-
-		curso = new Curso(
-				"cereja.png",
-				"Cereja",
-				"cereja",
-				"1 unidade aprox. 250g",
-				true,
-				240,
-				BigDecimal.valueOf(11.23),
-				LocalDate.of(2023, 5, 11),
-				fruta);
-		cursoRepository.save(curso);
-
 	}
 }
