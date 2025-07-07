@@ -3,31 +3,27 @@ package com.marcelovalentino.falamundobackend.service;
 import com.marcelovalentino.falamundobackend.exception.EntidadeNaoEncontradaException;
 import com.marcelovalentino.falamundobackend.model.Carrinho;
 import com.marcelovalentino.falamundobackend.model.Curso;
+import com.marcelovalentino.falamundobackend.model.Usuario;
 import com.marcelovalentino.falamundobackend.repository.CarrinhoRepository;
 import com.marcelovalentino.falamundobackend.repository.CursoRepository;
+import com.marcelovalentino.falamundobackend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarrinhoService {
 
     @Autowired
     private CarrinhoRepository carrinhoRepository;
-
-//    @Transactional
-//    public Curso alterarCurso(Curso produto) {
-//        Optional<Curso> opt = produtoRepository.recuperarCursoPorIdComLock(produto.getId());
-//        if (opt.isPresent()) {
-//            return produtoRepository.save(produto);
-//        }
-//        throw new CursoNaoEncontradoException(
-//                "Curso número " + produto.getId() + " não encontrado.");
-//    }
+    @Autowired
+    private CursoRepository cursoRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Transactional
     public List<Carrinho> mostrarCarrinhoUsuario(String id) {
@@ -37,33 +33,16 @@ public class CarrinhoService {
     @Transactional(rollbackFor = Exception.class)
     public void removerCurso(long id) {
         carrinhoRepository.deleteById(id);
-//        produtoRepository.deleteById(1L);
-//        if (true) {
-//            throw new Exception("Deu erro!");
-//        }
-//        produtoRepository.deleteById(2L);
     }
 
-//    public Curso recuperarCursoPorId(long id) {
-//        return carrinhoRepository.recuperarCursoPorId(id)
-//            .orElseThrow(() -> new EntidadeNaoEncontradaException(
-//                "Curso número " + id + " não encontrado."));
-//    }
-//
-//    public Page<Curso> recuperarCursosComPaginacao(Pageable pageable, String nome) {
-//        return carrinhoRepository.recuperarCursosComPaginacao(pageable, "%" + nome + "%");
-//    }
-//
-//    public List<Curso> recuperarCursosPorSlugLingua(String slugLingua) {
-//        return carrinhoRepository.recuperarCursosPorSlugLingua(slugLingua);
-//    }
-//
-//    public Page<Curso> recuperarCursosPaginadosPorSlugDaLingua(String slugLingua, Pageable pageable) {
-//        if(!slugLingua.isEmpty()) {
-//            return carrinhoRepository.recuperarCursosPaginadosPorSlugDaLingua(slugLingua, pageable);
-//        }
-//        else {
-//            return carrinhoRepository.recuperarCursosPaginados(pageable);
-//        }
-//    }
+    @Transactional
+    public Carrinho adicionarCursoAoCarrinho(Long idUsuario, Long idCurso) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(idUsuario);
+        Optional<Curso> cursoOpt = cursoRepository.findById(idCurso);
+        if (usuarioOpt.isEmpty() || cursoOpt.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Usuário ou curso não encontrado");
+        }
+        Carrinho carrinho = new Carrinho(cursoOpt.get(), usuarioOpt.get());
+        return carrinhoRepository.save(carrinho);
+    }
 }
