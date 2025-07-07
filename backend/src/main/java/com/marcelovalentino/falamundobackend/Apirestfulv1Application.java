@@ -43,10 +43,10 @@ public class Apirestfulv1Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Usuario usuario = new Usuario("admin", "desweb");
+		Usuario usuario = new Usuario("admin", "desweb", "admin@desweb.com");
 		usuarioRepository.save(usuario);
 
-		Usuario usuario2 = new Usuario("usuario", "desweb");
+		Usuario usuario2 = new Usuario("usuario", "senha", "usuario@desweb.com");
 		usuarioRepository.save(usuario2);
 
 		Lingua frances = new Lingua("Francês", "frances");

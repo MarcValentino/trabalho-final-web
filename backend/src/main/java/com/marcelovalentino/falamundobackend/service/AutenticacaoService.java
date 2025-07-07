@@ -13,7 +13,12 @@ public class AutenticacaoService {
 
     public Usuario login(Usuario usuario) {
         // System.out.println("Conta = " + usuario.getConta() + " e senha = " + usuario.getSenha());
-        return usuarioRepository.findByContaAndSenha(
-                usuario.getConta(), usuario.getSenha());
+        return usuarioRepository.findByEmailAndSenha(
+                usuario.getEmail(), usuario.getSenha());
+    }
+
+    public Usuario cadastrarUsuario(String conta, String senha, String email) {
+        Usuario usuario = new Usuario(conta, senha, email);
+        return usuarioRepository.save(usuario);
     }
 }
