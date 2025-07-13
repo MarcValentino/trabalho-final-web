@@ -1,12 +1,11 @@
 package com.marcelovalentino.falamundobackend.repository;
 
 import com.marcelovalentino.falamundobackend.model.Carrinho;
-import com.marcelovalentino.falamundobackend.model.Curso;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,4 +24,8 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
     )
     List<Carrinho> recuperarCursosPorIdUsuario(@Param("id") String id);
 
+    @Modifying
+    @Transactional
+    @Query("update Carrinho cr set cr.vendido = true where cr.usuario.id = :id and cr.vendido = false")
+    int fecharCarrinhoPorUsuario(@Param("id") String id);
 }

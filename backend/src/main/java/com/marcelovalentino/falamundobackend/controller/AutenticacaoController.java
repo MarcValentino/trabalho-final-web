@@ -21,11 +21,7 @@ public class AutenticacaoController {
     public TokenResponse login(@RequestBody Usuario usuario) {
         System.out.println(usuario.getEmail() + " " + usuario.getSenha());
         Usuario usuarioLogado = autenticacaoService.login(usuario);
-        if (usuarioLogado != null) {
-            return new TokenResponse(usuarioLogado.getId());
-        } else {
-            return new TokenResponse(0);
-        }
+        return new TokenResponse(usuarioLogado.getId());
     }
 
     @PostMapping("cadastro")

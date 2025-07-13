@@ -18,9 +18,11 @@ public class Usuario {
     private Long id;
 
     // @NotEmpty(message = "A 'Conta' deve ser informada.")
+    @Column(unique = true, nullable = false)
     private String conta;
     // @NotEmpty(message = "A 'Senha' deve ser informada.")
     private String senha;
+    @Column(unique = true, nullable = false)
     @NotEmpty(message = "O email deve ser informado.")
     private String email;
 

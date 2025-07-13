@@ -31,7 +31,7 @@ public class CarrinhoService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void removerCurso(long id) {
+    public void removerItem(long id) {
         carrinhoRepository.deleteById(id);
     }
 
@@ -44,5 +44,10 @@ public class CarrinhoService {
         }
         Carrinho carrinho = new Carrinho(cursoOpt.get(), usuarioOpt.get());
         return carrinhoRepository.save(carrinho);
+    }
+
+    @Transactional
+    public void fecharCarrinho(String idUsuario) {
+        carrinhoRepository.fecharCarrinhoPorUsuario(idUsuario);
     }
 }

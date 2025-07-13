@@ -1,10 +1,7 @@
 package com.marcelovalentino.falamundobackend.controller;
 
 import com.marcelovalentino.falamundobackend.model.Carrinho;
-import com.marcelovalentino.falamundobackend.model.Usuario;
-import com.marcelovalentino.falamundobackend.service.AutenticacaoService;
 import com.marcelovalentino.falamundobackend.service.CarrinhoService;
-import com.marcelovalentino.falamundobackend.util.TokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.marcelovalentino.falamundobackend.dto.AdicionarCursoDTO;
@@ -28,5 +25,15 @@ public class CarrinhoController {
     @PostMapping("usuario/{idUsuario}/adicionar")
     public Carrinho adicionarAoCarrinho(@PathVariable Long idUsuario, @RequestBody AdicionarCursoDTO request) {
         return carrinhoService.adicionarCursoAoCarrinho(idUsuario, request.getIdCurso());
+    }
+
+    @DeleteMapping("{idCarrinho}")
+    public void removerItem(@PathVariable("idCarrinho") long id) {
+        carrinhoService.removerItem(id);
+    }
+
+    @PostMapping("usuario/{idUsuario}/fechar")
+    public void comprarCarrinho(@PathVariable("idUsuario") String idUsuario) {
+        carrinhoService.fecharCarrinho(idUsuario);
     }
 }
