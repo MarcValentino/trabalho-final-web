@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
     @Query(
@@ -28,4 +29,14 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
     @Transactional
     @Query("update Carrinho cr set cr.vendido = true where cr.usuario.id = :id and cr.vendido = false")
     int fecharCarrinhoPorUsuario(@Param("id") String id);
+
+    @Query(
+            value=  "select cr from Carrinho cr " +
+                    "join fetch cr.usuario u " +
+                    "join fetch cr.curso c " +
+                    "where u.id = :idUsuario " +
+                    "and c.id = :idCurso " +
+                    "and not cr.vendido"
+    )
+    Optional<Carrinho> recuperarCarrinhoPorUsuarioECurso(@Param("idUsuario") Long idUsuario, @Param("idCurso") Long idCurso);
 }

@@ -42,8 +42,12 @@ public class CarrinhoService {
         if (usuarioOpt.isEmpty() || cursoOpt.isEmpty()) {
             throw new EntidadeNaoEncontradaException("Usuário ou curso não encontrado");
         }
-        Carrinho carrinho = new Carrinho(cursoOpt.get(), usuarioOpt.get());
-        return carrinhoRepository.save(carrinho);
+        Optional<Carrinho> carrinho_presente = carrinhoRepository.recuperarCarrinhoPorUsuarioECurso(usuarioOpt.get().getId(), cursoOpt.get().getId());
+        if(carrinho_presente.isEmpty()){
+            Carrinho carrinho = new Carrinho(cursoOpt.get(), usuarioOpt.get());
+            return carrinhoRepository.save(carrinho);
+        }
+        return carrinho_presente.get();
     }
 
     @Transactional
