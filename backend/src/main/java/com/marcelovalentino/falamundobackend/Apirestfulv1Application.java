@@ -43,7 +43,7 @@ public class Apirestfulv1Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Usuario usuario = new Usuario("admin", "desweb", "admin@desweb.com");
+		Usuario usuario = new Usuario("admin", "desweb", "admin@desweb.com", true);
 		usuarioRepository.save(usuario);
 
 		Usuario usuario2 = new Usuario("usuario", "senha", "usuario@desweb.com");
@@ -64,11 +64,11 @@ public class Apirestfulv1Application implements CommandLineRunner {
 		Lingua italiano = new Lingua("Italiano", "italiano");
 		linguaRepository.save(italiano);
 
-		Nivel basico = new Nivel("Básico");
+		Nivel basico = new Nivel("Básico", "basico");
 		nivelRepository.save(basico);
-		Nivel intermediario = new Nivel("Intermediário");
+		Nivel intermediario = new Nivel("Intermediário", "intermediario");
 		nivelRepository.save(intermediario);
-		Nivel avancado = new Nivel("Avançado");
+		Nivel avancado = new Nivel("Avançado", "avancado");
 		nivelRepository.save(avancado);
 
 		Curso francesBasico = new Curso(

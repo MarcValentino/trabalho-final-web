@@ -69,9 +69,11 @@ public class CursoController {
     public ResultadoPaginado<Curso> recuperarCursosComPaginacao(
             @RequestParam(value = "pagina", defaultValue = "0") int pagina,
             @RequestParam(value = "tamanho", defaultValue = "5") int tamanho,
-            @RequestParam(value = "nome", defaultValue = "") String nome) {
+            @RequestParam(value = "nome", defaultValue = "") String nome,
+            @RequestParam(value= "lingua", defaultValue = "") String lingua,
+            @RequestParam(value= "nivel", defaultValue = "") String nivel) {
         Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Curso> page = cursoService.recuperarCursosComPaginacao(pageable, nome);
+        Page<Curso> page = cursoService.recuperarCursosComPaginacao(pageable, nome, lingua, nivel);
         ResultadoPaginado<Curso> resultadoPaginado = new ResultadoPaginado<>(
                 page.getTotalElements(),
                 page.getTotalPages(),

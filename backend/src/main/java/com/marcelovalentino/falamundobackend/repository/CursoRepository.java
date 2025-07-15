@@ -27,12 +27,15 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
     @Query(
             value = "select p " +
                     "from Curso p " +
-                    "left outer join fetch p.lingua " +
+                    "join p.lingua l " +
+                    "join p.nivel n " +
                     "where p.nome like :nome " +
+                    "and l.slug like :lingua " +
+                    "and n.slug like :nivel " +
                     "order by p.id",
-            countQuery = "select count(p) from Curso p where p.nome like :nome"
+            countQuery = "select count(p) from Curso p join p.lingua l join p.nivel n where p.nome like :nome and l.slug like :lingua and n.slug like :nivel"
     )
-    Page<Curso> recuperarCursosComPaginacao(Pageable pageable, @Param("nome") String nome);
+    Page<Curso> recuperarCursosComPaginacao(Pageable pageable, @Param("nome") String nome, @Param("lingua") String lingua, @Param("nivel") String nivel);
 
     @Query("select p from Curso p " +
             "left outer join fetch p.lingua c " +

@@ -18,19 +18,16 @@ public class AutenticacaoController {
     private AutenticacaoService autenticacaoService;
 
     @PostMapping("login")  // http://localhost:8080/autenticacao/login
-    public TokenResponse login(@RequestBody Usuario usuario) {
+    public Usuario login(@RequestBody Usuario usuario) {
         System.out.println(usuario.getEmail() + " " + usuario.getSenha());
         Usuario usuarioLogado = autenticacaoService.login(usuario);
-        return new TokenResponse(usuarioLogado.getId());
+        return usuarioLogado;
     }
 
     @PostMapping("cadastro")
-    public TokenResponse cadastrar(@Valid @RequestBody UsuarioCadastroDTO dto) {
+    public Usuario cadastrar(@Valid @RequestBody UsuarioCadastroDTO dto) {
         Usuario usuario = autenticacaoService.cadastrarUsuario(dto.getConta(), dto.getSenha(), dto.getEmail());
-        if (usuario != null) {
-            return new TokenResponse(usuario.getId());
-        } else {
-            return new TokenResponse(0);
-        }
+        return usuario;
+
     }
 }

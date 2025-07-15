@@ -20,7 +20,7 @@ public class AutenticacaoService {
         if (user != null) {
             return user;
         }
-        else throw new CredenciaisInvalidasException();
+        throw new CredenciaisInvalidasException();
 
     }
 

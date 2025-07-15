@@ -1,6 +1,6 @@
 package com.marcelovalentino.falamundobackend.controller;
 
-import com.marcelovalentino.falamundobackend.service.NivelService;
+import com.marcelovalentino.falamundobackend.service.LinguaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +12,14 @@ import java.util.Map;
 
 @CrossOrigin("http://localhost:5173")
 @RestController
-@RequestMapping("/niveis")
-public class NivelController {
+@RequestMapping("/linguas")
+public class LinguaController {
     @Autowired
-    private NivelService nivelService;
+    private LinguaService linguaService;
 
     @GetMapping
-    public List<Map<String, String>> listarNiveis() {
-        return nivelService.listarNiveis();
+    public List<Map<String, String>> listarLinguas() {
+        return linguaService.listarLinguas();
     }
 }
 

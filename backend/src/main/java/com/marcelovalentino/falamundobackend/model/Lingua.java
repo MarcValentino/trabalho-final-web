@@ -2,6 +2,7 @@ package com.marcelovalentino.falamundobackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,13 @@ public class Lingua {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "O 'Nome' da língua deve ser informado.")
+    @Column(unique = true)
     private String nome;
+
+    @NotNull(message = "O 'Slug' da língua deve ser informado.")
+    @Column(unique = true)
     private String slug;
 
     @JsonIgnore

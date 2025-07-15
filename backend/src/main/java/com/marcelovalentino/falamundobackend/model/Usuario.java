@@ -26,9 +26,19 @@ public class Usuario {
     @NotEmpty(message = "O email deve ser informado.")
     private String email;
 
+    private boolean admin;
+
     public Usuario(String conta, String senha, String email) {
         this.conta = conta;
         this.senha = senha;
         this.email = email;
+        this.admin = false; // Por padrão, o usuário não é admin
+    }
+
+    public Usuario(String conta, String senha, String email, boolean admin) {
+        this.conta = conta;
+        this.senha = senha;
+        this.email = email;
+        this.admin = admin;
     }
 }
